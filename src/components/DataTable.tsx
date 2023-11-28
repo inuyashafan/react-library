@@ -64,7 +64,7 @@ function DataTable() {
             rows={bookData} 
             columns={columns}
             checkboxSelection={true} 
-            onRowSelectionModelChange={ (item:any) => {
+            onSelectionModelChange={ (item:any) => {
                 setSelectionModel(item);
             }}
             componentsProps={{

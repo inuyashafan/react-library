@@ -1,19 +1,27 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import Button from './Button'
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Button from './Button';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function Navbar() {
+    const [isVisible, setIsVisible] = useState(false);
+    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
 
-    const [isVisible, setIsVisible] = useState(false)
+    const signOutOnClick = () => {
+        logout();
+    };
+
+    const signInOnClick = () => {
+        loginWithRedirect();
+    };
 
     const dropDown = () => {
-        setIsVisible(!isVisible)
-    }
+        setIsVisible(!isVisible);
+    };
 
     const clicked = () => {
-        setIsVisible(false)
-    }
-
+        setIsVisible(false);
+    };
 
     return (
         <nav className='flex items-center justify-between flex-wrap bg-teal-500 p-6'>
@@ -22,47 +30,66 @@ function Navbar() {
             </div>
             <div className='block'>
                 <button onClick={dropDown} className='flex items-center px-3 py-2 text-teal-200 border rounded border-teal-400 hover:text-white hover:border-white'>
-                    
                     <i className='fas fa-bars'></i>
                 </button>
             </div>
             { isVisible ? (
-            <div className='w-full block flex-grow items-center'>
-                <div className="text-sm lg:flex-grow">
-                    <Button className='p-3 m-5 bg-teal-400 justify-center'>
-                        <div>
-                            <Link to='/' onClick={ clicked} className='flex place-itmes-center mt-4 lg:inline-block lg:mt-0
-                             text-teal-200 hover:text-white mr-4'>
-                                Home
-                            </Link>
-                        </div>
-
-                    </Button>
-                    <Button className='p-3 m-5 bg-teal-400 justify-center'>
-                        <div>
-                            <Link to='/about' onClick={ clicked} className='flex place-itmes-center mt-4 lg:inline-block lg:mt-0
-                             text-teal-200 hover:text-white mr-4'>
-                                About
-                            </Link>
-                        </div>
-
-                    </Button>
-                    <Button className='p-3 m-5 bg-teal-400 justify-center'>
-                        <div>
-                            <Link to='/dashboard' onClick={ clicked} className='flex place-itmes-center mt-4 lg:inline-block lg:mt-0
-                             text-teal-200 hover:text-white mr-4'>
-                                Dashboard
-                            </Link>
-                        </div>
-
-                    </Button>
+                <div className='w-full block flex-grow items-center'>
+                    <div className="text-sm lg:flex-grow">
+                        <Button className='p-3 m-5 bg-teal-400 justify-center'>
+                            <div>
+                                <Link to='/' onClick={ clicked} className='flex place-items-center mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4'>
+                                    Home
+                                </Link>
+                            </div>
+                        </Button>
+                        <Button className='p-3 m-5 bg-teal-400 justify-center'>
+                            <div>
+                                <Link to='/about' onClick={ clicked} className='flex place-items-center mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4'>
+                                    About
+                                </Link>
+                            </div>
+                        </Button>
+                        <Button className="p-3 m-5 bg-teal-400 justify-center">
+                            <div>
+                                <Link to='/contact' onClick={ clicked } className='flex place-items-center mt-4 lg:inline-block lg:mt-0 
+                                text-teal-200 hover:text-white mr-4'>
+                                    Your Books
+                                </Link>
+                            </div>
+                        </Button>
+                        <Button className='p-3 m-5 bg-teal-400 justify-center'>
+                            <div>
+                                <Link to='/dashboard' onClick={ clicked} className='flex place-items-center mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4'>
+                                    Dashboard
+                                </Link>
+                            </div>
+                        </Button>
+                        {
+                            !isAuthenticated ? 
+                            <Button className='p-3 m-5 bg-teal-400 justify-center'>
+                                <div>
+                                    <Link to="/" onClick={signInOnClick} className='flex place-items-center mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white'>
+                                        Login
+                                    </Link>
+                                </div>
+                            </Button>
+                            :
+                            <Button className='p-3 m-5 bg-teal-400 justify-center'>
+                                <div>
+                                    <Link to="/" onClick={signOutOnClick} className='flex place-items-center mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white'>
+                                        Sign Out
+                                    </Link>
+                                </div>
+                            </Button>
+                        }
+                    </div>
                 </div>
-            </div>
             ) : (
-            <></>
-            ) }
+                <></>
+            )}
         </nav>
-    )  
+    );
 }
 
-export default Navbar
+export default Navbar;
