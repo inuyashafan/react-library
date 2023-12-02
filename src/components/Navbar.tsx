@@ -52,7 +52,7 @@ function Navbar() {
                         </Button>
                         <Button className="p-3 m-5 bg-teal-400 justify-center">
                             <div>
-                                <Link to='/contact' onClick={ clicked } className='flex place-items-center mt-4 lg:inline-block lg:mt-0 
+                                <Link to='/books' onClick={ clicked } className='flex place-items-center mt-4 lg:inline-block lg:mt-0 
                                 text-teal-200 hover:text-white mr-4'>
                                     Your Books
                                 </Link>
